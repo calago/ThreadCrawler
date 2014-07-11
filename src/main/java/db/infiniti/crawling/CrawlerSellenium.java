@@ -894,7 +894,7 @@ public class CrawlerSellenium {
 			nextPageResultLink = (List<WebElement>) sRPagesbrowser
 					.runXPathQuery(this.nextResultPagexPath);
 		}
-		if (nextPageResultLink != null && url != null) {
+		if (nextPageResultLink != null) {
 			if (nextPageResultLink.size() > 0) {
 				WebElement tempO = nextPageResultLink.get(0);
 
@@ -906,9 +906,11 @@ public class CrawlerSellenium {
 						"a")) {
 					url = ((WebElement) tempO).getAttribute("href");
 				}
-				if (url.contains("javascript:")) {
-					tempO.click();
-					url = "javascript clicked.";
+				if(url != null){
+					if (url.contains("javascript:")) {
+						tempO.click();
+						url = "javascript clicked.";
+					}
 				}
 				/*
 				 * url = nextPageResultLink.get(0).getAttribute("href");
