@@ -894,7 +894,7 @@ public class CrawlerSellenium {
 			nextPageResultLink = (List<WebElement>) sRPagesbrowser
 					.runXPathQuery(this.nextResultPagexPath);
 		}
-		if (nextPageResultLink != null) {
+		if (nextPageResultLink != null && url != null) {
 			if (nextPageResultLink.size() > 0) {
 				WebElement tempO = nextPageResultLink.get(0);
 
