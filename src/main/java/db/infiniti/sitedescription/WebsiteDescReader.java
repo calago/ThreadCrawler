@@ -39,7 +39,8 @@ public class WebsiteDescReader {
 		 * RuntimeException("Cannot connect the database!", e); }
 		 */
 
-		String url = "jdbc:postgresql://teehuis.ewi.utwente.nl:5432/Vacancies";
+		//String url = "jdbc:postgresql://teehuis.ewi.utwente.nl:5432/Vacancies";
+		String url = "jdbc:postgresql://10.1.0.23:5432/Vacancies";
 		String username = "mohammad";
 		String password = "4249324";
 		try {

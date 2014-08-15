@@ -5,7 +5,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -891,16 +890,18 @@ public class CrawlingConfig {
 	}
 
 	public void saveStringInFile(String link, String filePath, boolean append) {
-		try {
-			File file = new File(filePath);
-			FileWriter fstream = new FileWriter(file, append);
-			BufferedWriter out = new BufferedWriter(fstream);
-			out.write(link + "\n");
-			out.flush();
-			out.close();
-			fstream.close();
-		} catch (Exception e) {// Catch exception if any
-			System.err.println("Error: " + e.getMessage());
+		if(filePath != null){
+			try {
+				File file = new File(filePath);
+				FileWriter fstream = new FileWriter(file, append);
+				BufferedWriter out = new BufferedWriter(fstream);
+				out.write(link + "\n");
+				out.flush();
+				out.close();
+				fstream.close();
+			} catch (Exception e) {// Catch exception if any
+				System.err.println("Error: " + e.getMessage());
+			}
 		}
 
 	}

@@ -17,8 +17,8 @@ public class MainClass extends Thread {
 			dataModelTable = args[0];
 			dataOutputTable = args[1];
 		}else{
-			dataModelTable = "dsItemsModelXPATH";
-			dataOutputTable = "dsItemsOutputMohtry";
+			dataModelTable = "tweakersmodel";
+			dataOutputTable = "crawleroutput";
 		}
 		
 		ArrayList<String> listOfReturnedResults = new ArrayList<String>();
@@ -72,7 +72,7 @@ public class MainClass extends Thread {
 
 		//FedwebCrawler crawlingThread;
 		CrawlerSellenium crawlingThreadTest;
-		for (int numberOfCrawledSources = 22; numberOfCrawledSources < 23; numberOfCrawledSources++) {//totalNumOfWebsites
+		for (int numberOfCrawledSources = 25; numberOfCrawledSources < 26; numberOfCrawledSources++) {//totalNumOfWebsites
 			System.out.println("Number Of Crawled Sources: "
 					+ numberOfCrawledSources);
 
@@ -101,28 +101,19 @@ public class MainClass extends Thread {
 							+ crawlingConfig.getCollectionName() + "/"
 							+ "crawlstatus/");
 
-			crawlingConfig.setPathToVisitedPagesDoc(crawlingConfig
-					.getCrawlStatusPath() + "visited-pages");
-			crawlingConfig.setPathToAllDOwnloadedPages(crawlingConfig
-					.getCrawlStatusPath() + "all-downloaded-pages");
-			crawlingConfig.setPathToSentQueriesDoc(crawlingConfig
-					.getCrawlStatusPath() + "sent-queries");
-			crawlingConfig.setPathToCoveredCollections(crawlingConfig
-					.getCrawlStatusPath() + "covered-collections");
-			crawlingConfig.setPathToLastLinkDoc(crawlingConfig
-					.getCrawlStatusPath() + "last-link-detailed-page");
-			crawlingConfig.setPathToURLCrawlList(crawlingConfig
-					.getCrawlStatusPath() + "list-of-links-to-crawl");
-			crawlingConfig.setPathToLastSearchResultPage(crawlingConfig
-					.getCrawlStatusPath() + "last-result-page");
-			crawlingConfig.setPathToVisitedPagesPerQuery(crawlingConfig
-					.getCrawlStatusPath() + "visited-pages-per-query");
-			crawlingConfig.setPathToNumberOfSearchResults(crawlingConfig
-					.getCrawlStatusPath() + "number-search-results");
-			crawlingConfig.setPathToNumberOfRepetitions(crawlingConfig
-					.getCrawlStatusPath() + "number-repetitions");
-			crawlingConfig.setPathToNumberOfSentQueries(crawlingConfig
-					.getCrawlStatusPath() + "number-sent-queries");
+			//crawlingConfig.setPathToVisitedPagesDoc(crawlingConfig.getCrawlStatusPath() + "visited-pages");
+			//crawlingConfig.setPathToAllDOwnloadedPages(crawlingConfig.getCrawlStatusPath() + "all-downloaded-pages");
+			//crawlingConfig.setPathToSentQueriesDoc(crawlingConfig.getCrawlStatusPath() + "sent-queries");
+//			crawlingConfig.setPathToCoveredCollections(crawlingConfig.getCrawlStatusPath() + "covered-collections");
+//			crawlingConfig.setPathToLastLinkDoc(crawlingConfig.getCrawlStatusPath() + "last-link-detailed-page");
+//			crawlingConfig.setPathToURLCrawlList(crawlingConfig.getCrawlStatusPath() + "list-of-links-to-crawl");
+//			crawlingConfig.setPathToLastSearchResultPage(crawlingConfig.getCrawlStatusPath() + "last-result-page");
+//			crawlingConfig.setPathToVisitedPagesPerQuery(crawlingConfig.getCrawlStatusPath() + "visited-pages-per-query");
+//			crawlingConfig.setPathToNumberOfSearchResults(crawlingConfig.getCrawlStatusPath() + "number-search-results");
+//			crawlingConfig.setPathToNumberOfRepetitions(crawlingConfig.getCrawlStatusPath() + "number-repetitions");
+//			crawlingConfig.setPathToNumberOfSentQueries(crawlingConfig.getCrawlStatusPath() + "number-sent-queries");
+			
+			
 			// crawlingThread = new FedwebCrawler(crawlingConfig,
 			// listOfReturnedResults);
 			// crawlingThreadTest = new CrawlerWithHtmlUnit(crawlingConfig,

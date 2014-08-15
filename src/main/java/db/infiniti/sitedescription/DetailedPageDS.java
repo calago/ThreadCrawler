@@ -35,7 +35,8 @@ public class DetailedPageDS {
 	HashMap<String, Vector<List<List<String>>>> extractionResults = new HashMap<String, Vector<List<List<String>>>>();
 
 	public void connectToDB(String DBName) {
-		String url = "jdbc:postgresql://teehuis.ewi.utwente.nl:5432/" + DBName;
+		//String url = "jdbc:postgresql://teehuis.ewi.utwente.nl:5432/" + DBName;
+		String url = "jdbc:postgresql://10.1.0.23:5432/" + DBName;
 		String username = "mohammad";
 		String password = "4249324";
 		try {
