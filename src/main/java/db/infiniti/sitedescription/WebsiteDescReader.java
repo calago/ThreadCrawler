@@ -19,8 +19,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-//import com.mysql.jdbc.Connection;
-//import com.mysql.jdbc.Statement;
 
 public class WebsiteDescReader {
 
@@ -28,21 +26,8 @@ public class WebsiteDescReader {
 	ResultSet rs;
 	ArrayList<WebsiteDS> listOfWebsites = new ArrayList<WebsiteDS>();
 
-	private void getSQLServerConnection() {
-		/*
-		 * String url = "jdbc:mysql://trieschnigg.nl:3306/deb52794_fedweb";
-		 * String username = "deb52794_fedweb"; String password = "theF@tWeb";
-		 * try { System.out.println("Connecting database..."); if (connection ==
-		 * null) { connection = (Connection) DriverManager.getConnection(url,
-		 * username, password); System.out.println("Database connected!"); } }
-		 * catch (SQLException e) { throw new
-		 * RuntimeException("Cannot connect the database!", e); }
-		 */
+	private void getSQLServerConnection(String url, String username, String password) {
 
-		//String url = "jdbc:postgresql://teehuis.ewi.utwente.nl:5432/Vacancies";
-		String url = "jdbc:postgresql://10.1.0.23:5432/Vacancies";
-		String username = "mohammad";
-		String password = "4249324";
 		try {
 			System.out.println("Connecting database...");
 			Class.forName("org.postgresql.Driver");
@@ -58,8 +43,8 @@ public class WebsiteDescReader {
 		}
 	}
 
-	public ArrayList<WebsiteDS> readDB() {
-		getSQLServerConnection();
+	public ArrayList<WebsiteDS> readDB(String url, String username, String password) {
+		getSQLServerConnection(url, username, password);
 		Statement s;
 		try {
 			s = (Statement) connection.createStatement();

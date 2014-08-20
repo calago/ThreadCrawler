@@ -34,11 +34,11 @@ public class DetailedPageDS {
 	Connection connection;
 	HashMap<String, Vector<List<List<String>>>> extractionResults = new HashMap<String, Vector<List<List<String>>>>();
 
-	public void connectToDB(String DBName) {
+	public void connectToDB(String url, String username, String password) {
 		//String url = "jdbc:postgresql://teehuis.ewi.utwente.nl:5432/" + DBName;
-		String url = "jdbc:postgresql://10.1.0.23:5432/" + DBName;
-		String username = "mohammad";
-		String password = "4249324";
+//		String url = "jdbc:postgresql://10.1.0.23:5432/" + DBName;
+//		String username = "mohammad";
+//		String password = "4249324";
 		try {
 			System.out.println("Connecting database...");
 			Class.forName("org.postgresql.Driver");
@@ -138,8 +138,8 @@ public class DetailedPageDS {
 		}
 	}
 
-	public void readItemsXpathDB(String DBName, String dataModelTable) {
-		connectToDB(DBName);
+	public void readItemsXpathDB(String databaseUrl, String databaseUsername, String databasePassword, String dataModelTable) {
+		connectToDB(databaseUrl, databaseUsername, databasePassword);
 		Statement s;
 		ResultSet rs;
 		try {

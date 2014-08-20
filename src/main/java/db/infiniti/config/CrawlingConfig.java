@@ -83,8 +83,49 @@ public class CrawlingConfig {
 	public String pathToNumberOfSentQueries;
 	public boolean unPauseCrawl = true;
 	public String crawlStatusPath;
-
 	
+	
+	//Databaseinfo regarding the website datamodel
+	public static String DEFAULT_WEBSITEDATAMODEL_DBUSERNAME = "mohammad";
+	public static String DEFAULT_WEBSITEDATAMODEL_DBPASSWORD = "4249324";
+	public static String DEFAULT_WEBSITEDATAMODEL_DBURL = "jdbc:postgresql://10.1.0.23:5432/Vacancies";
+	
+	private String websiteDatamodel_databaseUsername;
+	private String websiteDatamodel_databasePassword;
+	private String websiteDatamodel_databaseURL;
+	
+	//Databaseinfo regarding the item datamodel
+	public static String DEFAULT_ITEMDATAMODEL_DBUSERNAME = "mohammad";
+	public static String DEFAULT_ITEMDATAMODEL_DBPASSWORD = "4249324";
+	public static String DEFAULT_ITEMDATAMODEL_DBURL = "jdbc:postgresql://10.1.0.23:5432/";
+	
+	private String itemDatamodel_databaseUsername;
+	private String itemDatamodel_databasePassword;
+	private String itemDatamodel_databaseURL;
+	
+	//Crawlmodes
+	
+	//Use a database to determine our datamodel
+	public static int CRAWLMODE_USE_DATBASE_DATAMODELS = 0x01;
+	
+	//Use a file to determine our datamodel
+	public static int CRAWLMODE_USE_FILE_DATAMODELS = 0x02;
+	
+	//Use a datamodel received via REST determine our datamodel
+	public static int CRAWLMODE_USE_REST_DATAMODELS = 0x03;
+	
+	private int crawlmode;
+	
+	
+	
+	public int getCrawlmode() {
+		return crawlmode;
+	}
+
+	public void setCrawlmode(int crawlmode) {
+		this.crawlmode = crawlmode;
+	}
+
 	public String getOutputDataBase() {
 		return outputDataBase;
 	}
@@ -135,7 +176,12 @@ public class CrawlingConfig {
 	}
 
 	public void setDetailedPageDS(String DBName) {
-		this.detailedPageDS.readItemsXpathDB(DBName, this.getDataModelTable());
+		
+		if(itemDatamodel_databaseUsername == null){
+			this.detailedPageDS.readItemsXpathDB(DEFAULT_ITEMDATAMODEL_DBURL, DEFAULT_ITEMDATAMODEL_DBUSERNAME, DEFAULT_ITEMDATAMODEL_DBPASSWORD, this.getDataModelTable());
+		}else{
+			this.detailedPageDS.readItemsXpathDB(itemDatamodel_databaseURL, itemDatamodel_databaseUsername, itemDatamodel_databasePassword, this.getDataModelTable());
+		}
 	}
 
 	public boolean isExtractDataFromDPageS() {
@@ -175,7 +221,13 @@ public class CrawlingConfig {
 	}
 
 	public void setAllSitesDescription() {
-		listOfWebsites = descripReader.readDB();
+		
+		//If this Config contains a null username, use the default
+		if(websiteDatamodel_databaseUsername == null){
+			listOfWebsites = descripReader.readDB(DEFAULT_WEBSITEDATAMODEL_DBURL,DEFAULT_WEBSITEDATAMODEL_DBUSERNAME, DEFAULT_WEBSITEDATAMODEL_DBPASSWORD);
+		}else{
+			listOfWebsites = descripReader.readDB(websiteDatamodel_databaseURL,websiteDatamodel_databaseUsername, websiteDatamodel_databasePassword);
+		}
 	}
 
 	public void setCurrentSiteDescription(boolean readFromDB, int index) {
@@ -1165,6 +1217,58 @@ public class CrawlingConfig {
 			}
 		}
 
+	}
+
+	public String getWebsiteDatamodel_databaseUsername() {
+		return websiteDatamodel_databaseUsername;
+	}
+
+	public void setWebsiteDatamodel_databaseUsername(
+			String websiteDatamodel_databaseUsername) {
+		this.websiteDatamodel_databaseUsername = websiteDatamodel_databaseUsername;
+	}
+
+	public String getWebsiteDatamodel_databasePassword() {
+		return websiteDatamodel_databasePassword;
+	}
+
+	public void setWebsiteDatamodel_databasePassword(
+			String websiteDatamodel_databasePassword) {
+		this.websiteDatamodel_databasePassword = websiteDatamodel_databasePassword;
+	}
+
+	public String getWebsiteDatamodel_databaseURL() {
+		return websiteDatamodel_databaseURL;
+	}
+
+	public void setWebsiteDatamodel_databaseURL(String websiteDatamodel_databaseURL) {
+		this.websiteDatamodel_databaseURL = websiteDatamodel_databaseURL;
+	}
+
+	public String getItemDatamodel_databaseUsername() {
+		return itemDatamodel_databaseUsername;
+	}
+
+	public void setItemDatamodel_databaseUsername(
+			String itemDatamodel_databaseUsername) {
+		this.itemDatamodel_databaseUsername = itemDatamodel_databaseUsername;
+	}
+
+	public String getItemDatamodel_databasePassword() {
+		return itemDatamodel_databasePassword;
+	}
+
+	public void setItemDatamodel_databasePassword(
+			String itemDatamodel_databasePassword) {
+		this.itemDatamodel_databasePassword = itemDatamodel_databasePassword;
+	}
+
+	public String getItemDatamodel_databaseURL() {
+		return itemDatamodel_databaseURL;
+	}
+
+	public void setItemDatamodel_databaseURL(String itemDatamodel_databaseURL) {
+		this.itemDatamodel_databaseURL = itemDatamodel_databaseURL;
 	}
 
 }
