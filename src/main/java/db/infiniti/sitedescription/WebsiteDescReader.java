@@ -82,7 +82,7 @@ public class WebsiteDescReader {
 		return listOfWebsites;
 	}
 
-	private String refineString(String string) {
+	public static String refineString(String string) {
 		if (string != null) {
 			if (string.contains("\\")) {
 				string = string.replace("\\", "");
@@ -156,7 +156,27 @@ public class WebsiteDescReader {
 	 * rs.close(); s.close(); } catch (SQLException e) { e.printStackTrace(); }
 	 * return listOfWebsites; }
 	 */
+	
+	/**
+	 * Gets the given websitedescription from our database
+	 * @param index
+	 * @return
+	 */
+	@Deprecated
 	public WebsiteDS readOneDSFromDB(int index) {
+		WebsiteDS siteDes = null;
+		if (!listOfWebsites.isEmpty()) {
+			siteDes = listOfWebsites.get(index);
+		}
+		return siteDes;
+	}
+	
+	/**
+	 * Gets a WebsiteDescription from our local collection
+	 * @param index
+	 * @return
+	 */
+	public WebsiteDS getWebsiteDS(int index) {
 		WebsiteDS siteDes = null;
 		if (!listOfWebsites.isEmpty()) {
 			siteDes = listOfWebsites.get(index);

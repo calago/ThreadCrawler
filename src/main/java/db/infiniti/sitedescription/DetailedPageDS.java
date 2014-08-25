@@ -24,6 +24,8 @@ import org.w3c.dom.NodeList;
 
 import db.infiniti.config.CrawlingConfig;
 import db.infiniti.crawling.CrawlerSellenium;
+import db.infiniti.server.rest.CrawlerRestRequest;
+import db.infiniti.server.rest.ItemData;
 import db.infiniti.surf.Browser;
 
 public class DetailedPageDS {
@@ -162,6 +164,12 @@ public class DetailedPageDS {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void readItemsXpathFromRequest(CrawlerRestRequest request) {
+			for(ItemData itemdata : request.getItem_datamodel()) {
+				dataModel.put(itemdata.getLabel(), itemdata.getXpath());
+			}
 	}
 
 	public void createTable(String tableName,

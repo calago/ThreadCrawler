@@ -15,6 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
+import db.infiniti.server.rest.CrawlerRestRequest;
 import db.infiniti.sitedescription.DetailedPageDS;
 import db.infiniti.sitedescription.WebsiteDS;
 import db.infiniti.sitedescription.WebsiteDescReader;
@@ -97,7 +98,7 @@ public class CrawlingConfig {
 	//Databaseinfo regarding the item datamodel
 	public static String DEFAULT_ITEMDATAMODEL_DBUSERNAME = "mohammad";
 	public static String DEFAULT_ITEMDATAMODEL_DBPASSWORD = "4249324";
-	public static String DEFAULT_ITEMDATAMODEL_DBURL = "jdbc:postgresql://10.1.0.23:5432/";
+	public static String DEFAULT_ITEMDATAMODEL_DBURL = "jdbc:postgresql://10.1.0.23:5432/mydatafactory";
 	
 	private String itemDatamodel_databaseUsername;
 	private String itemDatamodel_databasePassword;
@@ -114,7 +115,8 @@ public class CrawlingConfig {
 	//Use a datamodel received via REST determine our datamodel
 	public static int CRAWLMODE_USE_REST_DATAMODELS = 0x03;
 	
-	private int crawlmode;
+	//REST is the default datamodel determiner
+	private int crawlmode = CRAWLMODE_USE_DATBASE_DATAMODELS;
 	
 	
 	
@@ -174,6 +176,11 @@ public class CrawlingConfig {
 	public void setDataModelTable(String dataModelTable) {
 		this.dataModelTable = dataModelTable;
 	}
+	
+	//Set the datamodel using the datamodel from a REST request
+	public void setDataModel(CrawlerRestRequest request){	
+		this.detailedPageDS.readItemsXpathFromRequest(request);
+	}
 
 	public void setDetailedPageDS(String DBName) {
 		
@@ -220,7 +227,8 @@ public class CrawlingConfig {
 		this.pathToVisitedPagesPerQuery = pathToVisitedPagesPerQuery;
 	}
 
-	public void setAllSitesDescription() {
+	@Deprecated
+	public void setAllSitesDescription() throws Exception {
 		
 		//If this Config contains a null username, use the default
 		if(websiteDatamodel_databaseUsername == null){
@@ -229,8 +237,41 @@ public class CrawlingConfig {
 			listOfWebsites = descripReader.readDB(websiteDatamodel_databaseURL,websiteDatamodel_databaseUsername, websiteDatamodel_databasePassword);
 		}
 	}
+	
+	/**
+	 * Set our sites description / website datamodel using info from a restrequest
+	 * @param request
+	 */
+	public void setAllSitesDescription(CrawlerRestRequest request){
+		
+		//Begin a new collection
+		ArrayList<WebsiteDS> websiteDatamodels = new ArrayList<WebsiteDS>();
+		
+		//Create a new websitedescription using the given Rest Request
+		WebsiteDS siteDes = new WebsiteDS();
+		siteDes.setEngineid(request.getID());
+		siteDes.setName(request.getName());
+		siteDes.setAddress(request.getUrl());
+		siteDes.setDescription("REST website Crawler");
+		siteDes.setComments("Datamodel made using REST");
+		siteDes.setTemplate(request.getTemplateurl());
+		siteDes.setItemXPath(request.getItem_xpath());
+		siteDes.setLinkXPath(request.getItem_link_xpath());
+		siteDes.setTitleXPath(request.getItem_title_xpath());
+		siteDes.setDescXPath(request.getItem_description_xpath());
+		siteDes.setThumbNXPath(request.getItem_thumbnail_xpath());
+		siteDes.setStatus("");
+		siteDes.setNextPageXP(WebsiteDescReader.refineString(request.getNextpage_xpath()));
+		
+		//Add the websitedatamodel to our collection
+		websiteDatamodels.add(siteDes);
+		
+		//Return the list of website datamodels to our crawlingconfig
+		listOfWebsites = websiteDatamodels;
+	}
 
-	public void setCurrentSiteDescription(boolean readFromDB, int index) {
+	@Deprecated
+	public void setCurrentSiteDescription(boolean readFromDB, int index){
 		if (readFromDB) {
 			currentSiteDescription = descripReader.readOneDSFromDB(index);
 		} else {
@@ -239,6 +280,17 @@ public class CrawlingConfig {
 			// openFileDescription
 		}
 	}
+	
+	/**
+	 * Gets the current WebsiteDescripttion (Datamodel)
+	 * @param request
+	 */
+	public void setCurrentSiteDescription(CrawlerRestRequest request){
+		//Currently, yoou can only request one website datamodel at a time using REST
+		currentSiteDescription = listOfWebsites.get(0);
+	}
+	
+	
 
 	public String getCollectionName() {
 		return currentCollectionName;
@@ -263,13 +315,13 @@ public class CrawlingConfig {
 		this.currentCollectionName = name;
 	}
 
-	public ArrayList<String> getQueries() {
-		return queries;
-	}
-
-	public void setQueries(ArrayList<String> queries) {
-		this.queries = queries;
-	}
+//	public ArrayList<String> getQueries() {
+//		return queries;
+//	}
+//
+//	public void setQueries(ArrayList<String> queries) {
+//		this.queries = queries;
+//	}
 
 	public LinkedHashMap<String, String> getQueryNumberofResults() {
 		return queryNumberofResults;

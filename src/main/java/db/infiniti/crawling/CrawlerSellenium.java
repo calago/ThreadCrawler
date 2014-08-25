@@ -63,7 +63,7 @@ public class CrawlerSellenium {
 	String url;
 	String searchResultlink;
 	String sourceURL;
-	ArrayList<String> queries;
+	//ArrayList<String> queries;
 
 	boolean firstTryForLinkDetection = true;
 	boolean firstTryForXpath = true;
@@ -115,7 +115,7 @@ public class CrawlerSellenium {
 		this.crawlingConfig = crawlingConfig;
 		this.listOfAllReturnedResults = listOfReturnedResults;
 		crawlReport = new CrawlingReportDS();
-		queries = crawlingConfig.getQueries();
+		//queries = crawlingConfig.getQueries();
 		saveLinkPath = crawlingConfig.getLinkContentSavePath();
 		siteDes = crawlingConfig.getCurrentSiteDescription();
 		sourceURL = siteDes.getTemplate();
@@ -322,9 +322,19 @@ public class CrawlerSellenium {
 							 */// extractLinksFromSearchResultsFragments
 								// function
 							if (crawlingConfig.extractDataFromDPageS == true) {
-								extractFromDetailedPages(
-										crawlingConfig.getOutputDataBase(),
-										detailedPagesbrowser);
+								
+								if(crawlingConfig.getCrawlmode() == CrawlingConfig.CRAWLMODE_USE_REST_DATAMODELS){
+									
+									extractFromDetailedPages(
+											crawlingConfig.getOutputDataBase(),
+											detailedPagesbrowser);
+									
+								}else{
+								
+									extractFromDetailedPages(
+											crawlingConfig.getOutputDataBase(),
+											detailedPagesbrowser);
+								}
 							}
 
 							if (!listOfReturnedResultsPerQuery
@@ -631,15 +641,17 @@ public class CrawlerSellenium {
 
 						// what to return for thumbXP
 						// TODO how to deal with Thumbnail
-
-						if (!thumb_xp.equals("") && !thumb_xp.equals("")
-								&& !thumb_xp.equals("?")) {
-							crawledLinkDS.setThumbLink(this.findThumbnailLink(
-									HE, thumb_xp));
-
+						if(thumb_xp != null){
+							if (!thumb_xp.equals("") && !thumb_xp.equals("")
+									&& !thumb_xp.equals("?")) {
+								crawledLinkDS.setThumbLink(this.findThumbnailLink(
+										HE, thumb_xp));
+	
+							} else {
+								crawledLinkDS.setThumbLink("No thumb_xpath.");
+							}
 						} else {
 							crawledLinkDS.setThumbLink("No thumb_xpath.");
-
 						}
 
 					}

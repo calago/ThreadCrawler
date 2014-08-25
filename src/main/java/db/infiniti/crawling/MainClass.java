@@ -60,7 +60,12 @@ public class MainClass extends Thread {
 			totalNumOfWebsites = crawlingConfig.getListOfSourcesFolders()
 					.size();
 		} else if (readFromDB) {
-			crawlingConfig.setAllSitesDescription();
+			try {
+				crawlingConfig.setAllSitesDescription();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			totalNumOfWebsites = crawlingConfig.getListOfWebsites().size();
 		}
 		crawlingConfig.setQuerySelectionApproach(crawlingConfig.browsing);
@@ -79,11 +84,9 @@ public class MainClass extends Thread {
 			if (!readFromDB) {// setting for each of the websources
 				crawlingConfig.setOpenDescFilePath(numberOfCrawledSources);
 				crawlingConfig.setCollectionName();
-				crawlingConfig.setCurrentSiteDescription(readFromDB,
-						numberOfCrawledSources);
+				crawlingConfig.setCurrentSiteDescription(readFromDB,numberOfCrawledSources);
 			} else {
-				crawlingConfig.setCurrentSiteDescription(readFromDB,
-						numberOfCrawledSources);
+				crawlingConfig.setCurrentSiteDescription(readFromDB,numberOfCrawledSources);
 				crawlingConfig.setCollectionName(crawlingConfig
 						.getCurrentSiteDescription().getName());
 			}
